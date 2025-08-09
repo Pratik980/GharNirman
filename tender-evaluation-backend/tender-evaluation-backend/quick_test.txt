@@ -1,0 +1,11 @@
+
+      Contractor Name: Quick Test Construction
+      License Category: A
+      Project Duration: 12
+      Warranty Period: 24
+      Client Rating: 4
+      Project Success Rate: 85.0
+      Rejection History: 0
+      Safety Certification: Yes
+      Bid Amount: $150,000
+    

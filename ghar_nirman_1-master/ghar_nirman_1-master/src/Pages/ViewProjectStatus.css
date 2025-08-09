@@ -1,0 +1,166 @@
+.project-status-container {
+    max-width: 800px;
+    margin: 50px auto;
+    font-family: 'Arial', sans-serif;
+    background: #ffffff;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background-color:#556b2f;
+}
+.page-title {
+    text-align: center;
+    color:rgb(247, 243, 243);
+    margin: 50px 0 30px; 
+    font-size: 40px;
+    font-weight: 600;
+    position: relative;
+    height: auto;
+}
+/* Status Cards */
+.status-card {
+    background: #f9f9f9;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    border-left: 4px solid #4CAF50;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.status-card h2 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+.status-card p {
+    margin: 8px 0;
+    color: #555;
+    line-height: 1.6;
+}
+
+.status-card strong {
+    color: #333;
+    font-weight: 600;
+}
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 15px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    min-height: 120px; 
+    resize: vertical;
+    transition: border 0.3s ease;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+.submit-btn {
+    background-color: #2196F3; 
+    color: white;
+    padding: 10px;
+    border-radius: 8 px ;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    display: block;
+    margin: 20px auto;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #0b7dda;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.download-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.download-btn:hover {
+    background-color: #45a049;
+}
+@media (max-width: 768px) {
+    .project-status-container {
+        margin: 20px;
+        padding: 20px;
+    }
+    
+    .page-title {
+        font-size: 24px;
+    }
+    
+    .status-card {
+        padding: 15px;
+    }
+}
+
+/* Status Indicators */
+.status-ongoing {
+    color: #FFA500;
+    font-weight: bold;
+}
+
+.status-completed {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.status-pending {
+    color: #F44336;
+    font-weight: bold;
+}
+
+/* Task Lists */
+.task-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.task-list {
+    width: 48%;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.completed {
+    background: #e8f5e9;
+}
+
+.pending {
+    background: #ffebee;
+}
+
+/* Progress Bar */
+.progress-container {
+    margin: 20px 0;
+}
+
+.progress-bar {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    height: 20px;
+    margin: 10px 0;
+}
+
+.progress {
+    height: 100%;
+    background-color:blue;
+    border-radius: 5px;
+}

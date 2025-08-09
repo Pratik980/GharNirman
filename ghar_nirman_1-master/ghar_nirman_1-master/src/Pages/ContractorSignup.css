@@ -1,0 +1,313 @@
+/* Modern Contractor Sign Up Page Styling */
+/* Override any global container styles */
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* Force override any container styles */
+body .signup-container,
+body .signup-container * {
+  box-sizing: border-box !important;
+}
+
+body .signup-container {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  transform: none !important;
+}
+
+/* Override any global container class */
+body .signup-container .container {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin: 0 !important;
+  max-width: none !important;
+}
+
+.signup-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 2rem;
+  width: 100%;
+  margin: 0;
+  position: relative;
+}
+
+.signup-form-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 100%;
+  max-width: 600px;
+  transition: all 0.3s ease;
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+
+.signup-header {
+  padding: 1.5rem 2rem 1rem;
+  text-align: center;
+  background: linear-gradient(to right, #556b2f, #6b8e23);
+  color: white;
+}
+
+.signup-header h1 {
+  margin: 0.25rem 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.signup-header p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 0.9rem;
+}
+
+.signup-logo {
+  width: 160px;
+  height: auto;
+  margin-bottom: 0.75rem;
+  filter: brightness(0) invert(1);
+}
+
+.signup-form {
+  padding: 2rem;
+}
+
+.form-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.form-section h3 {
+  color: #2d3748;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-bottom: 2px solid #556b2f;
+  padding-bottom: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background-color: #f8fafc;
+  transition: all 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #556b2f;
+  box-shadow: 0 0 0 3px rgba(85, 107, 47, 0.1);
+  background-color: white;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* File upload styles */
+.form-group input[type="file"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px dashed #cbd5e0;
+  border-radius: 8px;
+  background-color: #f8fafc;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.form-group input[type="file"]:hover {
+  border-color: #556b2f;
+  background-color: #f0f4f8;
+}
+
+.form-group input[type="file"]:focus {
+  outline: none;
+  border-color: #556b2f;
+  box-shadow: 0 0 0 3px rgba(85, 107, 47, 0.1);
+}
+
+.form-group small {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+/* Password requirements styling */
+.password-requirements {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  border-left: 3px solid #556b2f;
+}
+
+.password-requirements small {
+  color: #6c757d;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+/* Required field indicator */
+.form-group label[for*="License"],
+.form-group label[for*="Registration"] {
+  color: #e53e3e;
+}
+
+.form-group label[for*="License"]::after,
+.form-group label[for*="Registration"]::after {
+  content: " *";
+  color: #e53e3e;
+}
+
+/* Error message */
+.error-message {
+  background: #fee;
+  color: #c33;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  border: 1px solid #fcc;
+  font-size: 0.9rem;
+}
+
+/* Form actions */
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.submit-btn,
+.cancel-btn {
+  padding: 0.85rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.submit-btn {
+  background: linear-gradient(to right, #556b2f, #6b8e23);
+  color: white;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: linear-gradient(to right, #6b8e23, #556b2f);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(85, 107, 47, 0.2);
+}
+
+.submit-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.cancel-btn {
+  background: #f8f9fa;
+  color: #666;
+  border: 1px solid #ddd;
+}
+
+.cancel-btn:hover {
+  background: #e9ecef;
+  transform: translateY(-1px);
+}
+
+/* Loading spinner */
+.spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .contractor-signup {
+    padding: 1rem;
+  }
+  
+  .signup-container {
+    border-radius: 12px;
+  }
+  
+  .signup-header {
+    padding: 1.25rem 1rem;
+  }
+  
+  .signup-form {
+    padding: 1.5rem;
+  }
+  
+  .form-section {
+    padding: 1rem;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .submit-btn,
+  .cancel-btn {
+    width: 100%;
+  }
+} 

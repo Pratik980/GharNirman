@@ -1,0 +1,151 @@
+/* Main Container */
+.material-listing-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+  }
+  .material-header {
+    background-color:#556b2f;
+    font-size: 30;
+    padding: 20 px;
+    color: white;
+    text-align:center;
+    margin-bottom: 40px;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    align-items: flex-end; 
+    justify-content: center;
+    min-height:180px; 
+    box-sizing: border-box;
+  }
+  
+  .header-content {
+    margin-bottom: 10px; 
+  }
+  
+  .page-title {
+    margin: 0;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  
+  .page-subtitle {
+    margin: 20px 0 0;
+    font-size: 1.2rem;
+    opacity: 0.9;
+    font-weight: 300;
+  }
+  
+  .material-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+    padding: 0 20px;
+    border-radius: 20;
+  }
+  
+  .material-card {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .material-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .category-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #556b2f;
+  }
+  
+  .category-icon {
+    font-size: 1.8rem;
+    color: #556b2f;
+    margin-right: 15px;
+  }
+  
+  .category-header h2 {
+    color: #2064a8;
+    font-size: 1.4rem;
+    margin: 0;
+  }
+  
+  /* Material Table */
+  .material-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .material-table th {
+    text-align: left;
+    padding: 12px 8px;
+    border-bottom: 5px solid #63df4a;
+    color: #556b2f;
+    font-weight: 600;
+  }
+  
+  .material-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #eee;
+    color: #0c0b0b;
+  }
+  
+  .material-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  /* Supplier Section */
+  .supplier-section {
+    background: #37dd31;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px;
+    text-align: center;
+  }
+  
+  .supplier-icon {
+    font-size: 2.5rem;
+    color: #556b2f;
+    margin-bottom: 15px;
+  }
+  
+  .supplier-section h3 {
+    color: #ffffff;
+    margin-bottom: 20px;
+  }
+  
+  .supplier-list {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  
+  .supplier-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    min-width: 250px;
+  }
+  
+  .supplier-card h4 {
+    color: #2c3e50;
+    margin-top: 0;
+  }
+  
+  .supplier-card p {
+    color: #666;
+    margin-bottom: 0;
+  }
+  

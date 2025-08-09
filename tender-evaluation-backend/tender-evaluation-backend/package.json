@@ -1,0 +1,39 @@
+{
+  "name": "tender-evaluation-backend",
+  "version": "1.0.0",
+  "description": "Backend for Automated Construction Tender Evaluation and Cost Estimation",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@stripe/react-stripe-js": "^3.7.0",
+    "@stripe/stripe-js": "^7.5.0",
+    "axios": "^1.11.0",
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "express-validator": "^7.2.1",
+    "firebase-admin": "^13.3.0",
+    "form-data": "^4.0.4",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.6.0",
+    "multer": "^2.0.1",
+    "node-fetch": "^2.7.0",
+    "nodemon": "^3.1.9",
+    "pdf-lib": "^1.17.1",
+    "pdf-parse": "^1.1.1",
+    "pdfplumber": "^0.0.1-security",
+    "pusher": "^5.2.0",
+    "pusher-js": "^8.4.0",
+    "stripe": "^18.3.0"
+  }
+}

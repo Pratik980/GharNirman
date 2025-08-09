@@ -1,0 +1,111 @@
+/* CostEstimator.css */
+
+.estimator-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .estimator-container h1 {
+    text-align: center;
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .input-group label {
+    display: block;
+    font-size: 1.1em;
+    color: #444;
+    margin-bottom: 8px;
+  }
+  
+  .input-group input,
+  .input-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+  }
+  
+  .input-group input:focus,
+  .input-group select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  button {
+    width: 70%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-items:justify;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .result {
+    margin-top: 30px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .result h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .result p {
+    font-size: 1.1em;
+    color: #444;
+    text-align: center;
+  }
+  
+  .result h3 {
+    text-align: center;
+    font-size: 1.3em;
+    color: #007bff;
+    margin-top: 20px;
+  }
+  
+  .note {
+    font-size: 0.9em;
+    color: #888;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  /* Small screens (mobile) */
+  @media (max-width: 600px) {
+    .estimator-container {
+      padding: 15px;
+    }
+  
+    button {
+      padding: 10px;
+    }
+  
+    .result h2,
+    .result p,
+    .result h3 {
+      font-size: 1em;
+    }
+  }
+  
