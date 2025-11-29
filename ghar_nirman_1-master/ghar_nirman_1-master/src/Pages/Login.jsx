@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import { signInWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { signInWithEmailAndPassword, sendEmailVerification, getRedirectResult, GoogleAuthProvider } from "firebase/auth";
 import { auth, db } from "./Firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import { toast } from "react-toastify";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -30,6 +30,46 @@ const Login = () => {
   const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
+    // Handle Google redirect result
+    const handleRedirectResult = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result) {
+          const user = result.user;
+          
+          // Check if user exists in Firestore
+          const userRef = doc(db, "users", user.uid);
+          const userSnap = await getDoc(userRef);
+
+          let userData;
+          if (!userSnap.exists()) {
+            // If not, create the user in Firestore
+            await setDoc(userRef, {
+              fullName: user.displayName || "",
+              email: user.email,
+              userType: "homeowner", // default role
+              createdAt: new Date(),
+            });
+            userData = { userType: "homeowner" };
+          } else {
+            userData = userSnap.data();
+          }
+
+          toast.success("Signed in with Google!");
+          // Redirect based on user type
+          redirectBasedOnUserType(userData.userType || "homeowner");
+        }
+      } catch (error) {
+        console.error("Redirect result error:", error);
+        // Don't show error if user cancelled
+        if (error?.code !== "auth/popup-closed-by-user") {
+          toast.error(`Google sign-in failed: ${error.message}`);
+        }
+      }
+    };
+
+    handleRedirectResult();
+
     // Check for reset password success message from ResetPassword component
     if (location.state?.message) {
       setSuccessMessage(location.state.message);
@@ -47,7 +87,7 @@ const Login = () => {
         rememberMe: true,
       }));
     }
-  }, [location.state]);
+  }, [location.state, navigate]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -195,24 +235,6 @@ const Login = () => {
 
       // Get Firebase ID token
       const token = await result.user.getIdToken();
-
-      // Sync user data with backend MongoDB
-      try {
-        await fetch("http://localhost:5000/api/sync-user", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            fullName: result.userData.fullName,
-            userType: result.userData.userType,
-            email: result.user.email,
-          }),
-        });
-      } catch (syncError) {
-        console.error("Error syncing user with backend:", syncError);
-      }
 
       localStorage.setItem("authToken", token);
 

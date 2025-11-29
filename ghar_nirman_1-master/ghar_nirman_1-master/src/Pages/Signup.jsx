@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   sendEmailVerification,
   onAuthStateChanged
 } from "firebase/auth";
 import { auth, db } from "./Firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { FiUser, FiMail, FiEye, FiEyeOff, FiBriefcase, FiHome, FiMapPin, FiPhone, FiFileText } from "react-icons/fi";
 import { toast } from "react-toastify";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -31,7 +33,64 @@ const Signup = () => {
     agreeToTerms: false,
   });
 
+  // Handle Google redirect result
+  useEffect(() => {
+    const handleRedirectResult = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result) {
+          const user = result.user;
 
+          // Wait for auth state and save Google user to Firestore
+          const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+            if (currentUser && currentUser.uid === user.uid) {
+              try {
+                const userRef = doc(db, "users", user.uid);
+                const userSnap = await getDoc(userRef);
+                
+                let userData;
+                if (!userSnap.exists()) {
+                  await setDoc(
+                    userRef,
+                    {
+                      fullName: user.displayName || "",
+                      email: user.email,
+                      userType: "homeowner", // Force homeowner role for Google sign-in
+                      createdAt: new Date().toISOString(),
+                      emailVerified: true,
+                      status: "approved",
+                    },
+                    { merge: true }
+                  );
+                  userData = { userType: "homeowner" };
+                } else {
+                  userData = userSnap.data();
+                }
+
+                toast.success("Signed in with Google!");
+                // Redirect based on user type
+                redirectBasedOnUserType(userData.userType || "homeowner");
+              } catch (firestoreError) {
+                console.error("Firestore error:", firestoreError);
+                toast.error("Sign-in successful but failed to save user data.");
+                // Default to homeowner dashboard on error
+                navigate("/homeowner-dashboard");
+              }
+              unsubscribe();
+            }
+          });
+        }
+      } catch (error) {
+        console.error("Redirect result error:", error);
+        // Don't show error if user cancelled
+        if (error?.code !== "auth/popup-closed-by-user") {
+          toast.error(`Google sign-in failed: ${error.message}`);
+        }
+      }
+    };
+
+    handleRedirectResult();
+  }, [navigate]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -46,6 +105,22 @@ const Signup = () => {
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
   const toggleConfirmPasswordVisibility = () =>
     setShowConfirmPassword(!showConfirmPassword);
+
+  // Function to redirect based on user type
+  const redirectBasedOnUserType = (userType) => {
+    console.log('Redirecting user type:', userType);
+    switch (userType) {
+      case 'contractor':
+        navigate('/contractor-dashboard');
+        break;
+      case 'admin':
+        navigate('/admin-dashboard');
+        break;
+      case 'homeowner':
+      default:
+        navigate('/homeowner-dashboard');
+    }
+  };
 
 
 
@@ -136,24 +211,6 @@ const Signup = () => {
             await setDoc(doc(db, "users", user.uid), userData);
             console.log("User data saved to Firestore");
 
-            // Get Firebase ID token for backend verification
-            const idToken = await currentUser.getIdToken();
-            console.log("Got Firebase ID token", idToken);
-
-            // Send user data to backend to sync with MongoDB
-            const response = await fetch("http://localhost:5000/api/sync-user", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${idToken}`,
-              },
-              body: JSON.stringify({
-                fullName,
-                userType: "homeowner",
-              }),
-            });
-            console.log("Backend sync response", response);
-
             toast.success("Signup successful! Please check your email to verify your account.");
             
             navigate("/login");
@@ -204,48 +261,61 @@ const Signup = () => {
         if (currentUser && currentUser.uid === user.uid) {
           try {
             const userRef = doc(db, "users", user.uid);
-            await setDoc(
-              userRef,
-              {
-                fullName: user.displayName || "",
-                email: user.email,
-                userType: "homeowner", // Force homeowner role for Google sign-in
-                createdAt: new Date().toISOString(),
-                emailVerified: true,
-                status: "approved",
-              },
-              { merge: true }
-            );
-
-            // Get Firebase ID token
-            const idToken = await currentUser.getIdToken();
-
-            // Sync Google user with backend MongoDB
-            await fetch("http://localhost:5000/api/sync-user", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${idToken}`,
-              },
-              body: JSON.stringify({
-                fullName: user.displayName || "",
-                userType: "homeowner",
-              }),
-            });
+            const userSnap = await getDoc(userRef);
+            
+            let userData;
+            if (!userSnap.exists()) {
+              await setDoc(
+                userRef,
+                {
+                  fullName: user.displayName || "",
+                  email: user.email,
+                  userType: "homeowner", // Force homeowner role for Google sign-in
+                  createdAt: new Date().toISOString(),
+                  emailVerified: true,
+                  status: "approved",
+                },
+                { merge: true }
+              );
+              userData = { userType: "homeowner" };
+            } else {
+              userData = userSnap.data();
+            }
 
             toast.success("Signed in with Google!");
-            navigate("/");
+            // Redirect based on user type
+            redirectBasedOnUserType(userData.userType || "homeowner");
           } catch (firestoreError) {
             console.error("Firestore error:", firestoreError);
             toast.error("Sign-in successful but failed to save user data.");
-            navigate("/");
+            // Default to homeowner dashboard on error
+            navigate("/homeowner-dashboard");
           }
           unsubscribe();
         }
       });
     } catch (error) {
       console.error("Google sign-in error:", error);
-      toast.error(`Google sign-in failed: ${error.message}`);
+
+      // Handle various popup-related errors and fall back to redirect
+      if (
+        error?.code === "auth/popup-blocked" ||
+        error?.code === "auth/popup-closed-by-user" ||
+        error?.code === "auth/cancelled-popup-request" ||
+        error?.message?.includes("Cross-Origin-Opener-Policy")
+      ) {
+        toast.info("Using redirect flow for Google sign-in...");
+        try {
+          await signInWithRedirect(auth, provider);
+          return;
+        } catch (redirectError) {
+          console.error("Google redirect sign-in error:", redirectError);
+          toast.error(`Google sign-in failed: ${redirectError.message}`);
+          return;
+        }
+      }
+
+      toast.error(`Google sign-in failed: ${error.message || "Unknown error"}`);
     }
   };
 

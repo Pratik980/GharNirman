@@ -541,6 +541,10 @@ const ConstructionIcon = () => (
       
       const response = await fetch(`${contractorsApiUrl}/by-uid/${currentUserData.uid}`);
       if (!response.ok) {
+        if (response.status === 404) {
+          // Contractor profile does not exist yet; don't treat as network failure
+          throw new Error("Contractor profile not found (404)");
+        }
         if (response.status === 404 && retryCount < 2) {
           console.log("⚠️ Contractor not found, retrying in 2 seconds...");
           setTimeout(() => fetchContractorProfile(retryCount + 1), 2000);
@@ -1010,6 +1014,22 @@ Generated on: ${new Date().toLocaleString()}
     }
   }, [activeTab]);
 
+  // After defining currentUserData:
+  useEffect(() => {
+    if (currentUserData && currentUserData.uid) {
+      console.log("🔄 Fetching contractor profile for UID:", currentUserData.uid);
+      fetchContractorProfile();
+      fetchUploadedFiles();
+    }
+  }, [currentUserData?.uid]);
+
+  // Log when contractor ID becomes available
+  useEffect(() => {
+    if (currentUserData?._id) {
+      console.log("✅ Contractor ID is now available:", currentUserData._id);
+    }
+  }, [currentUserData?._id]);
+
   // Debug log before rendering recommended tenders
   console.log("Recommended Tenders - currentUserData:", currentUserData);
 
@@ -1046,22 +1066,6 @@ Generated on: ${new Date().toLocaleString()}
       </div>
     );
   }
-
-  // After defining currentUserData:
-  useEffect(() => {
-    if (currentUserData && currentUserData.uid) {
-      console.log("🔄 Fetching contractor profile for UID:", currentUserData.uid);
-      fetchContractorProfile();
-      fetchUploadedFiles();
-    }
-  }, [currentUserData?.uid]);
-
-  // Log when contractor ID becomes available
-  useEffect(() => {
-    if (currentUserData?._id) {
-      console.log("✅ Contractor ID is now available:", currentUserData._id);
-    }
-  }, [currentUserData?._id]);
 
   const handleTenderFileSelect = (tenderId, e) => {
     const file = e.target.files[0];

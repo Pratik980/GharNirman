@@ -23,6 +23,13 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Relax Cross-Origin-Opener-Policy to avoid blocking popup window.close calls
+// This helps prevent Chrome warnings when using Firebase signInWithPopup
+app.use((req, res, next) => {
+  res.setHeader("Cross-Origin-Opener-Policy", "unsafe-none");
+  next();
+});
+
 // Get directory name for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
